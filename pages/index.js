@@ -1,11 +1,7 @@
 import Head from "next/head";
-import { PostCard, Catagories, PostWidget } from "../components";
-
-export default function Home() {
-	const posts = [
-		{ title: "React Testing", excerpt: "Learn React Testing" },
-		{ title: "React With Tailwind", excerpt: "Learn React with Tailwind" },
-	];
+import { PostCard, Categories, PostWidget } from "../components";
+import { getPost } from "../services";
+export default function Home({ posts }) {
 	return (
 		<div className="container mx-auto px-10 mb-8">
 			<Head>
@@ -23,9 +19,19 @@ export default function Home() {
 					))}
 				</div>
 				<div className="col-span-1 lg:col-span-4">
-					<div className="relative lg:sticky top-8 "></div>
+					<div className="relative lg:sticky top-8 ">
+						<PostWidget />
+						<Categories />
+					</div>
 				</div>
 			</div>
 		</div>
 	);
+}
+
+export async function getStaticProps() {
+	const posts = (await getPost()) || [];
+	return {
+		props: { posts },
+	};
 }
