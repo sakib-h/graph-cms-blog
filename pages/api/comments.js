@@ -33,10 +33,8 @@ export default async function comments(req, res) {
 	`;
 	try {
 		const result = await graphQLClient.request(query, req.body);
-		console.log(result);
 		return res.status(200).send(result);
 	} catch (error) {
-		console.log(error);
 		return res.status(500).send(error);
 	}
 }
